@@ -14,8 +14,8 @@ function Index() {
         <ul className="flex flex-col space-y-2">
           {messages.map((message, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            <li key={index} className="flex flex-col gap-2">
-              <small>{message.prompt}</small>
+            <li key={index} className="flex flex-col gap-2 border-gray-500/30 border-b p-2">
+              <small className="text-amber-400">{message.prompt}</small>
               <p>{message.response}</p>
             </li>
           ))}
