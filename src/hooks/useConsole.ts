@@ -1,13 +1,14 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { useState } from "react";
 import { commandsTree } from "../data/commandTree";
-import { addConsoleCommand, clearHistory, db } from "../db/db";
+import { addConsoleCommand, clearHistory, db, setMetadata, startDatabase } from "../db/db";
 import { CommandContext } from "../types";
 
 export const useConsole = () => {
   const [loading, setLoading] = useState(false);
 
   const consoleData = useLiveQuery(() => db.consoleDB.toArray());
+  const metadata = useLiveQuery(() => db.metadataDB.toArray());
 
   const messages = consoleData?.[0]?.history || [];
   //
@@ -16,23 +17,26 @@ export const useConsole = () => {
 
     try {
       const [command, ...args] = prompt.split(" ");
-      let node = commandsTree[command];
+      const node = commandsTree[command];
 
       if (!node) {
         await addConsoleCommand(prompt, "Comando no encontrado.");
         return;
       }
 
-      if (node.subCommands && args.length > 0) {
-        const subCommand = args.shift() as string;
-        node = node.subCommands[subCommand];
-
-        if (!node) {
-          await addConsoleCommand(prompt, `Subcomando no encontrado: ${subCommand}`);
-          return;
-        }
-      }
-      const ctx: CommandContext = { commandsTree, clearHistory, setColor: () => null };
+      const ctx: CommandContext = {
+        commandsTree,
+        clearHistory,
+        setColor: () => {
+          setMetadata("theme", args[0]);
+        },
+        setTheme(theme) {
+          setMetadata("theme", theme);
+        },
+        setFont: () => {
+          setMetadata("fontSize", Number.parseInt(args[0], 10));
+        },
+      };
       const response = node.execute ? await node.execute(ctx, args) : "Comando ejecutado.";
       await addConsoleCommand(prompt, response);
     } catch (error) {
@@ -45,5 +49,9 @@ export const useConsole = () => {
 
   const clear = clearHistory;
 
-  return { messages, handleCommand, clear, loading };
+  const populate = async () => {
+    await startDatabase();
+  };
+
+  return { messages, handleCommand, clear, loading, metadata, populate };
 };
