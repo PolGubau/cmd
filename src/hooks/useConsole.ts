@@ -9,7 +9,7 @@ export const useConsole = () => {
   const [loading, setLoading] = useState(false);
   const {
     t,
-    i18n: { changeLanguage, language },
+    i18n: { changeLanguage },
   } = useTranslation();
 
   const consoleData = useLiveQuery(() => db.consoleDB.toArray());
@@ -32,11 +32,17 @@ export const useConsole = () => {
       const node = commandsTree[command.toLowerCase()];
 
       if (!node) {
-        await addConsoleCommand(prompt, "Comando no encontrado.");
+        await addConsoleCommand(prompt, t("notFound"));
         return;
       }
 
       const ctx: CommandContext = {
+        showCommands: (commands) => {
+          const commandsList = Object.keys(commands).map((key) => {
+            return `${key}: ${t(commands[key].description)}`;
+          });
+          addConsoleCommand(prompt, commandsList);
+        },
         commandsTree,
         clearHistory,
         setColor: () => {
@@ -52,14 +58,14 @@ export const useConsole = () => {
           handleChangeLanguage(lng);
         },
       };
-      const response = node.execute ? await node.execute(ctx, args) : "Comando ejecutado.";
+      const response = node.execute ? await node.execute(ctx, args) : t("executedCommand");
       if (!response) {
         return;
       }
 
-      await addConsoleCommand(prompt, response);
+      await addConsoleCommand(prompt, t(`commands.${response}`));
     } catch (error) {
-      const errorHistory = "Error al procesar el comando.";
+      const errorHistory = t("processError");
       await addConsoleCommand(prompt, errorHistory);
     } finally {
       setLoading(false);

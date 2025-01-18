@@ -2,44 +2,42 @@ import { CommandsTree, Metadata } from "../types";
 
 export const commandsTree: CommandsTree = {
   help: {
-    description: "Muestra la lista de comandos disponibles.",
+    description: "help",
     execute: (context) => {
-      const list = Object.keys(context.commandsTree).map(
-        (cmd) => `${cmd} - ${context.commandsTree[cmd].description || ""}`,
-      );
-      return list;
+      context.showCommands(context.commandsTree);
+      return null;
     },
   },
   clear: {
-    description: "Limpia el historial de la consola.",
+    description: "clear",
     execute: (context) => {
       context.clearHistory();
-      return "Consola limpia.";
+      return "clear";
     },
   },
   cls: {
-    description: "Limpia el historial de la consola.",
+    description: "clear",
     execute: (context) => {
       context.clearHistory();
-      return "Consola limpia.";
+      return "clear";
     },
   },
   dark: {
-    description: "Activa el modo oscuro.",
+    description: "dark",
     execute: (context) => {
       context.setTheme("dark");
-      return "Modo oscuro activado.";
+      return "dark";
     },
   },
   light: {
-    description: "Activa el modo claro.",
+    description: "light",
     execute: (context) => {
       context.setTheme("light");
-      return "Modo claro activado";
+      return "light";
     },
   },
   exit: {
-    description: "Cierra la consola.",
+    description: "exit",
     execute: (context) => {
       window.close();
       context.clearHistory();
@@ -47,53 +45,53 @@ export const commandsTree: CommandsTree = {
     },
   },
   reset: {
-    description: "Resete a la consola.",
+    description: "reset",
     execute: (context) => {
       context.clearHistory();
       return null;
     },
   },
   color: {
-    description: "Cambia el color de la consola. Ejemplo: color red",
+    description: "color",
     execute: (context, args) => {
       if (args.length === 0) {
-        return "Debes especificar un color.";
+        return "mustColor";
       }
       // colors need to be from a predefined list
       if (!["red", "green", "blue", "yellow", "grey"].includes(args[0])) {
-        return "Color no válido. Los colores válidos son: red, green, blue, yellow, grey.";
+        return "invalidColor";
       }
       context.setColor(args[0] as Metadata["color"]);
-      return `Color cambiado a ${args[0]}.`;
+      return "colorChanged";
     },
   },
   lang: {
-    description: "Cambia el idioma de la consola. Ejemplo: lang es",
+    description: "lang",
     execute: (context, args) => {
       if (args.length === 0) {
-        return "Debes especificar un idioma (es, en, de).";
+        return "mustLang";
       }
       // colors need to be from a predefined list
       if (!["es", "de", "en"].includes(args[0])) {
-        return "Idioma no válido. Los idiomas válidos son: es, en, de.";
+        return "invalidLang";
       }
       context.setLang(args[0] as "es" | "en" | "de");
-      return `Idioma cambiado a ${args[0]}.`;
+      return "langChanged";
     },
   },
 
   font: {
-    description: "Cambia el tamaño de la fuente de la consola. Ejemplo: font 16",
+    description: "font",
     execute: (context, args) => {
       if (args.length === 0) {
-        return "Debes especificar un tamaño.";
+        return "mustFont";
       }
       const size = Number.parseInt(args[0], 10);
       if (Number.isNaN(size) || size < 1 || size > 72) {
-        return "Tamaño no válido.";
+        return "invalidSize";
       }
       context.setFont(size);
-      return `Tamaño de fuente cambiado a ${size}.`;
+      return "fontChanged";
     },
   },
 };

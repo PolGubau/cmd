@@ -1,3 +1,5 @@
+import translations from "./i18n/en/translation.json";
+
 export interface Message {
   id: number;
   prompt: string;
@@ -21,6 +23,7 @@ export interface Metadata {
 }
 
 export type CommandContext = {
+  showCommands: (commands: CommandsTree) => void;
   commandsTree: CommandsTree;
   clearHistory: () => void;
   setColor: (color: Metadata["color"]) => void;
@@ -29,15 +32,17 @@ export type CommandContext = {
   setLang: (lang: Metadata["language"]) => void;
 };
 
+export type translationKeys = keyof typeof translations;
+export type commandKeys = keyof typeof translations.commands;
+
 export type CommandFunction = (
   context: CommandContext,
   args: string[],
-) => string | Promise<string> | string[] | Promise<string[]> | null;
+) => commandKeys | Promise<commandKeys> | commandKeys[] | Promise<commandKeys[]> | null;
 
 export type CommandNode = {
   description?: string; // Breve descripción del comando
   execute?: CommandFunction; // Función que se ejecuta para el comando
-  subCommands?: CommandsTree; // Subcomandos anidados
 };
 
 export type CommandsTree = {

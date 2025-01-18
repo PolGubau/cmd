@@ -88,7 +88,7 @@ function Index() {
               type="text"
               // biome-ignore lint/a11y/noAutofocus: <explanation>
               autoFocus={true}
-              placeholder="Escribe un comando..."
+              placeholder={t("placeholder")}
               className="flex w-full flex-1 bg-transparent text-black dark:text-white"
               name="prompt"
             />

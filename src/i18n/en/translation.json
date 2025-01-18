@@ -1,9 +1,32 @@
 {
   "path": "C:/Users/pol.gubau",
+  "notFound": "Command not found. Type 'help' for a list of commands.",
+  "processError": "Error processing command",
+  "executedCommand": "Command executed successfully",
+  "placeholder": "Type a command...",
+
   "commands": {
     "placeholder": {
       "prompt": "Welcome to Pol Gubau's console!",
       "subtitle": "Type a command to get started. For a list of commands, type 'help'."
-    }
+    },
+    "help": "Lists all available commands",
+    "clear": "Clears the console",
+    "dark": "Switches to dark mode",
+    "light": "Switches to light mode",
+    "exit": "Exits the console",
+    "reset": "Resets the console",
+    "color": "Switches to color mode. Example: color red",
+    "mustColor": "You must specify a color. Example: color red",
+    "invalidColor": "Invalid color. Available colors: red, green, blue, yellow, grey",
+    "colorChanged": "Color changed successfully",
+    "lang": "Switches to language mode. Example: lang es",
+    "mustLang": "You must specify a language. Example: lang es",
+    "invalidLang": "Invalid language. Available languages: en, es,de",
+    "langChanged": "Language changed successfully",
+    "font": "Switches to font size. Example: font 16",
+    "mustFont": "You must specify a font size. Example: font 16",
+    "invalidSize": "Invalid font size. Available from 1 to 72",
+    "fontChanged": "Font size changed successfully"
   }
 }

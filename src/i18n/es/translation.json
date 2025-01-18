@@ -1,9 +1,31 @@
 {
   "path": "C:/Usuario/pol.gubau",
+  "notFound": "Comando no encontrado. Escribe 'help' para obtener una lista de comandos.",
+  "processError": "Error al procesar el comando",
+  "executedCommand": "Comando ejecutado con éxito",
+  "placeholder": "Escribe un comando...",
   "commands": {
     "placeholder": {
       "prompt": "¡Bienvenido a la consola de Pol Gubau!",
-      "subtitle": "Escribe un comando para comenzar. Para obtener una lista de comandos, escribe 'help'."
-    }
+      "subtitle": "Escribe un comando para comenzar. Para ver la lista de comandos, escribe 'help'."
+    },
+    "help": "Muestra todos los comandos disponibles",
+    "clear": "Limpia la consola",
+    "dark": "Cambia al modo oscuro",
+    "light": "Cambia al modo claro",
+    "exit": "Sale de la consola",
+    "reset": "Restablece la consola",
+    "color": "Cambia el color. Ejemplo: color rojo",
+    "mustColor": "Debes especificar un color. Ejemplo: color rojo",
+    "invalidColor": "Color no válido. Colores disponibles: rojo, verde, azul, amarillo, gris",
+    "colorChanged": "Color cambiado con éxito",
+    "lang": "Cambia el idioma. Ejemplo: lang es",
+    "mustLang": "Debes especificar un idioma. Ejemplo: lang es",
+    "invalidLang": "Idioma no válido. Idiomas disponibles: en, es, de",
+    "langChanged": "Idioma cambiado con éxito",
+    "font": "Cambia el tamaño de la fuente. Ejemplo: font 16",
+    "mustFont": "Debes especificar un tamaño de fuente. Ejemplo: font 16",
+    "invalidSize": "Tamaño de fuente no válido. Disponible de 1 a 72",
+    "fontChanged": "Tamaño de fuente cambiado con éxito"
   }
 }
