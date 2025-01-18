@@ -3,5 +3,5 @@ export const Response = ({
 }: {
   answer: string;
 }) => {
-  return <p>{answer}</p>;
+  return <p className="pl-3">{answer}</p>;
 };

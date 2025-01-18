@@ -1,0 +1,9 @@
+{
+  "path": "C:/Users/pol.gubau",
+  "commands": {
+    "placeholder": {
+      "prompt": "Welcome to Pol Gubau's console!",
+      "subtitle": "Type a command to get started. For a list of commands, type 'help'."
+    }
+  }
+}

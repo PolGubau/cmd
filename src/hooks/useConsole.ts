@@ -1,24 +1,35 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { commandsTree } from "../data/commandTree";
 import { addConsoleCommand, clearHistory, db, setMetadata, startDatabase } from "../db/db";
 import { CommandContext } from "../types";
 
 export const useConsole = () => {
   const [loading, setLoading] = useState(false);
+  const {
+    t,
+    i18n: { changeLanguage, language },
+  } = useTranslation();
 
   const consoleData = useLiveQuery(() => db.consoleDB.toArray());
   const metadata = useLiveQuery(() => db.metadataDB.toArray());
 
   const messages = consoleData?.[0]?.history || [];
+
+  const handleChangeLanguage = (newLang: "es" | "en" | "de") => {
+    setMetadata("language", newLang);
+    changeLanguage(newLang);
+  };
+
   //
   const handleCommand = async (prompt: string) => {
     setLoading(true);
 
     try {
-      const [command, ...args] = prompt.toLowerCase().split(" ");
-      // case should not matter, so the comparison is done in lowercase
-      const node = commandsTree[command];
+      const [command, ...args] = prompt.split(" ");
+      // case should not matter, so the comparison is done in lowercase (command and the keys in the tree)
+      const node = commandsTree[command.toLowerCase()];
 
       if (!node) {
         await addConsoleCommand(prompt, "Comando no encontrado.");
@@ -29,7 +40,7 @@ export const useConsole = () => {
         commandsTree,
         clearHistory,
         setColor: () => {
-          setMetadata("theme", args[0]);
+          setMetadata("color", args[0]);
         },
         setTheme(theme) {
           setMetadata("theme", theme);
@@ -37,8 +48,15 @@ export const useConsole = () => {
         setFont: () => {
           setMetadata("fontSize", Number.parseInt(args[0], 10));
         },
+        setLang: (lng) => {
+          handleChangeLanguage(lng);
+        },
       };
       const response = node.execute ? await node.execute(ctx, args) : "Comando ejecutado.";
+      if (!response) {
+        return;
+      }
+
       await addConsoleCommand(prompt, response);
     } catch (error) {
       const errorHistory = "Error al procesar el comando.";

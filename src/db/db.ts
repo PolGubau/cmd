@@ -18,10 +18,11 @@ const initialConsole: Omit<ConsoleData, "id"> = {
 };
 
 const initialMetadata: Omit<Metadata, "id"> = {
-  theme: "default",
+  theme: "dark",
   fontSize: 16,
   darkMode: false,
   language: "en",
+  color: "grey",
 };
 // Define una tabla tipada para mensajes de consola
 const consoleTable = db.consoleDB;

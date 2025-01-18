@@ -13,24 +13,26 @@ export interface ConsoleData {
 
 export interface Metadata {
   id: number;
-  theme: string;
+  theme: "light" | "dark";
   fontSize: number;
+  color: "red" | "blue" | "green" | "yellow" | "grey";
   darkMode: boolean;
-  language: string;
+  language: "en" | "es" | "de";
 }
 
 export type CommandContext = {
   commandsTree: CommandsTree;
   clearHistory: () => void;
-  setColor: (color: string) => void;
-  setTheme: (theme: "light" | "dark") => void;
+  setColor: (color: Metadata["color"]) => void;
+  setTheme: (theme: Metadata["theme"]) => void;
   setFont: (size: number) => void;
+  setLang: (lang: Metadata["language"]) => void;
 };
 
 export type CommandFunction = (
   context: CommandContext,
   args: string[],
-) => string | Promise<string> | string[] | Promise<string[]>;
+) => string | Promise<string> | string[] | Promise<string[]> | null;
 
 export type CommandNode = {
   description?: string; // Breve descripción del comando

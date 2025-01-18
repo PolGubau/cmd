@@ -1,4 +1,4 @@
-import { CommandsTree } from "../types";
+import { CommandsTree, Metadata } from "../types";
 
 export const commandsTree: CommandsTree = {
   help: {
@@ -24,33 +24,61 @@ export const commandsTree: CommandsTree = {
       return "Consola limpia.";
     },
   },
-  darkMode: {
+  dark: {
     description: "Activa el modo oscuro.",
     execute: (context) => {
       context.setTheme("dark");
       return "Modo oscuro activado.";
     },
   },
-  lightMode: {
+  light: {
     description: "Activa el modo claro.",
     execute: (context) => {
       context.setTheme("light");
       return "Modo claro activado";
     },
   },
-
+  exit: {
+    description: "Cierra la consola.",
+    execute: (context) => {
+      window.close();
+      context.clearHistory();
+      return null;
+    },
+  },
+  reset: {
+    description: "Resete a la consola.",
+    execute: (context) => {
+      context.clearHistory();
+      return null;
+    },
+  },
   color: {
-    description: "Cambia el color de la consola. Ejemplo: setColor red",
+    description: "Cambia el color de la consola. Ejemplo: color red",
     execute: (context, args) => {
       if (args.length === 0) {
         return "Debes especificar un color.";
       }
       // colors need to be from a predefined list
-      if (!["red", "green", "blue"].includes(args[0])) {
-        return "Color no válido. Los colores válidos son: red, green, blue.";
+      if (!["red", "green", "blue", "yellow", "grey"].includes(args[0])) {
+        return "Color no válido. Los colores válidos son: red, green, blue, yellow, grey.";
       }
-      context.setColor(args[0]);
+      context.setColor(args[0] as Metadata["color"]);
       return `Color cambiado a ${args[0]}.`;
+    },
+  },
+  lang: {
+    description: "Cambia el idioma de la consola. Ejemplo: lang es",
+    execute: (context, args) => {
+      if (args.length === 0) {
+        return "Debes especificar un idioma (es, en, de).";
+      }
+      // colors need to be from a predefined list
+      if (!["es", "de", "en"].includes(args[0])) {
+        return "Idioma no válido. Los idiomas válidos son: es, en, de.";
+      }
+      context.setLang(args[0] as "es" | "en" | "de");
+      return `Idioma cambiado a ${args[0]}.`;
     },
   },
 
