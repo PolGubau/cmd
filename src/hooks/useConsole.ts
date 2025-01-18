@@ -16,7 +16,8 @@ export const useConsole = () => {
     setLoading(true);
 
     try {
-      const [command, ...args] = prompt.split(" ");
+      const [command, ...args] = prompt.toLowerCase().split(" ");
+      // case should not matter, so the comparison is done in lowercase
       const node = commandsTree[command];
 
       if (!node) {

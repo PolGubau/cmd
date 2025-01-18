@@ -1,4 +1,15 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-  "extends": ["@polgubau/configs/biome"]
+  "extends": ["@polgubau/configs/biome"],
+  "linter": {
+    "rules": {
+      "style": {
+        "noDefaultExport": "off",
+        "useFilenamingConvention": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off"
+      }
+    }
+  }
 }

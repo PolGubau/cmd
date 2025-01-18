@@ -22,14 +22,13 @@ function Index() {
 
   const darkMode = metadata?.[0]?.theme === "dark";
   return (
-    <div className="dark">
+    <div className={` ${darkMode ? "dark" : ""}`}>
       <code
         className={
           " flex w-screen items-center justify-center bg-zinc-200 font-normal text-black leading-6 text-opacity-90 dark:bg-zinc-900 dark:text-white"
         }
         style={{ fontSize: `${metadata?.[0]?.fontSize}px` }}
       >
-        <pre>{JSON.stringify(metadata, null, 2)}</pre>
         <main className="flex h-full min-h-screen w-full flex-col justify-end gap-4 p-4 outline outline-red-200">
           <ul className="flex flex-col space-y-2">
             {messages.map((message, index) => (
@@ -65,8 +64,13 @@ function Index() {
             }}
           >
             <span>path &gt;</span>
-            {/* biome-ignore lint/a11y/noAutofocus: <explanation> */}
-            <input type="text" autoFocus={true} className="flex w-full flex-1" name="prompt" />
+            <input
+              type="text"
+              // biome-ignore lint/a11y/noAutofocus: <explanation>
+              autoFocus={true}
+              className="flex w-full flex-1 bg-transparent text-black dark:text-white"
+              name="prompt"
+            />
           </form>
         </main>
       </code>
